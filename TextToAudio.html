@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FREE Text-to-Audiobook for Students | Convert Text to Audio</title>
+    <meta name="description" content="Free tool for students to convert any text to speech. Download as MP3. No signup required.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tagline {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .feature {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #6a11cb;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .output-section {
+            background: #f0f7ff;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #d0e3ff;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #6a11cb;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 250px;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            line-height: 1.6;
+            resize: vertical;
+            transition: border 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #6a11cb;
+            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+        }
+        
+        .char-count {
+            text-align: right;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .controls {
+            margin-bottom: 25px;
+        }
+        
+        .voice-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        select {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            flex: 1;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .primary-btn {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: white;
+        }
+        
+        .primary-btn:hover {
+            background: linear-gradient(90deg, #5a0db5, #1c68e8);
+        }
+        
+        .secondary-btn {
+            background: #f8f9fa;
+            color: #2c3e50;
+            border: 2px solid #ddd;
+        }
+        
+        .secondary-btn:hover {
+            background: #e9ecef;
+        }
+        
+        .success-btn {
+            background: linear-gradient(90deg, #00b09b, #96c93d);
+            color: white;
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        .success-btn:hover {
+            background: linear-gradient(90deg, #009b87, #86b935);
+        }
+        
+        .status-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .status-box.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .status-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+        
+        .status-processing {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .sample-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .sample-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .sample-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .sample-btn:hover {
+            background: #6a11cb;
+            color: white;
+            border-color: #6a11cb;
+        }
+        
+        .instructions {
+            background: #e8f4ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+            line-height: 1.8;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .feature-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            color: #6a11cb;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin: 15px 0;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            width: 0%;
+            transition: width 0.3s;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-graduation-cap"></i> FREE Text-to-Audiobook for Students</h1>
+            <p class="tagline">Convert textbooks, notes, and essays into audio files instantly</p>
+            <div class="features">
+                <span class="feature">✅ 100% Free</span>
+                <span class="feature">✅ No Signup Required</span>
+                <span class="feature">✅ Download as MP3</span>
+                <span class="feature">✅ Works Offline</span>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="input-section">
+                <div class="section-title">
+                    <i class="fas fa-keyboard"></i>
+                    <h2>Enter Your Text</h2>
+                </div>
+                
+                <textarea id="textInput" placeholder="Paste your textbook content, study notes, or essays here...">Welcome to the free Text-to-Audiobook tool for students! This tool helps you convert any text into audio files that you can listen to while studying, commuting, or relaxing. Perfect for auditory learners who want to study more effectively.</textarea>
+                
+                <div class="char-count">
+                    Characters: <span id="charCount">0</span> / 5000
+                </div>
+                
+                <div class="controls">
+                    <div class="voice-controls">
+                        <div class="control-group">
+                            <label for="voiceSelect"><i class="fas fa-user"></i> Voice Type</label>
+                            <select id="voiceSelect">
+                                <option value="en">English (US) - Female</option>
+                                <option value="en-uk">English (UK) - Female</option>
+                                <option value="en">English (US) - Male</option>
+                            </select>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="speedSelect"><i class="fas fa-tachometer-alt"></i> Speaking Speed</label>
+                            <select id="speedSelect">
+                                <option value="1.0">Normal Speed</option>
+                                <option value="0.8">Slow (Better for learning)</option>
+                                <option value="1.2">Fast</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button id="convertBtn" class="primary-btn">
+                            <i class="fas fa-play-circle"></i> Convert to Speech
+                        </button>
+                        <button id="clearBtn" class="secondary-btn">
+                            <i class="fas fa-eraser"></i> Clear Text
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                
+                <div id="statusBox" class="status-box"></div>
+                
+                <div class="sample-section">
+                    <h3><i class="fas fa-lightbulb"></i> Try with Sample Study Texts:</h3>
+                    <div class="sample-buttons">
+                        <button class="sample-btn" data-sample="biology">Biology Notes</button>
+                        <button class="sample-btn" data-sample="history">History Facts</button>
+                        <button class="sample-btn" data-sample="english">English Essay</button>
+                        <button class="sample-btn" data-sample="math">Math Concepts</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="output-section">
+                <div class="section-title">
+                    <i class="fas fa-volume-up"></i>
+                    <h2>Download Audio</h2>
+                </div>
+                
+                <div class="instructions">
+                    <h3><i class="fas fa-info-circle"></i> How to Use:</h3>
+                    <ol>
+                        <li>Type or paste your study material</li>
+                        <li>Click "Convert to Speech"</li>
+                        <li>Wait a few seconds</li>
+                        <li>MP3 file will download automatically</li>
+                        <li>Listen on any device</li>
+                    </ol>
+                </div>
+                
+                <button id="downloadBtn" class="success-btn" style="display: none;">
+                    <i class="fas fa-download"></i> Download MP3 Again
+                </button>
+                
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h4>Study Anywhere</h4>
+                        <p>Listen to textbooks while commuting</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>Better Learning</h4>
+                        <p>Audio learning improves memory</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h4>Save Time</h4>
+                        <p>Convert text in seconds</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>📚 Created for Students by Students • 100% Free Educational Tool • No Data Collection</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">
+                <i class="fas fa-server"></i> Backend Server: <span id="serverStatus">Checking...</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Sample study texts for students
+        const sampleTexts = {
+            biology: `PHOTOSYNTHESIS
+Photosynthesis is the process by which plants convert light energy into chemical energy. The equation is: 
+6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂
+This process occurs in chloroplasts and is essential for plant growth and oxygen production.`,
+
+            history: `THE RENAISSANCE PERIOD
+The Renaissance was a cultural movement that began in Italy in the 14th century. It marked the transition from the Middle Ages to modernity. Key figures include Leonardo da Vinci, Michelangelo, and Shakespeare. The period saw great advances in art, science, and literature.`,
+
+            english: `ESSAY WRITING TIPS
+A good essay has three main parts: introduction, body, and conclusion. The introduction presents your thesis. The body paragraphs provide evidence and arguments. The conclusion summarizes your main points. Always proofread your work before submission.`,
+
+            math: `PYTHAGOREAN THEOREM
+In a right-angled triangle, the square of the hypotenuse equals the sum of squares of the other two sides. Formula: a² + b² = c². This theorem is used in geometry, construction, and navigation. Example: If a=3 and b=4, then c=5.`
+        };
+
+        // DOM Elements
+        const textInput = document.getElementById('textInput');
+        const charCount = document.getElementById('charCount');
+        const convertBtn = document.getElementById('convertBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const voiceSelect = document.getElementById('voiceSelect');
+        const speedSelect = document.getElementById('speedSelect');
+        const statusBox = document.getElementById('statusBox');
+        const progressBar = document.getElementById('progressBar');
+        const progress = document.getElementById('progress');
+        const sampleBtns = document.querySelectorAll('.sample-btn');
+        const serverStatus = document.getElementById('serverStatus');
+
+        // Backend URL
+        const BACKEND_URL = 'http://localhost:5000';
+        let lastDownloadUrl = null;
+
+        // Initialize character count
+        updateCharCount();
+        textInput.addEventListener('input', updateCharCount);
+
+        function updateCharCount() {
+            const count = textInput.value.length;
+            charCount.textContent = count;
+            charCount.style.color = count > 5000 ? '#dc3545' : '#7f8c8d';
+        }
+
+        // Show status message
+        function showStatus(message, type = 'info') {
+            statusBox.textContent = message;
+            statusBox.className = `status-box status-${type} show`;
+            
+            // Auto-hide success messages after 5 seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    statusBox.classList.remove('show');
+                }, 5000);
+            }
+        }
+
+        // Show progress bar
+        function showProgress(percentage) {
+            progressBar.style.display = 'block';
+            progress.style.width = percentage + '%';
+        }
+
+        // Hide progress bar
+        function hideProgress() {
+            setTimeout(() => {
+                progressBar.style.display = 'none';
+                progress.style.width = '0%';
+            }, 500);
+        }
+
+        // Clear text
+        clearBtn.addEventListener('click', () => {
+            textInput.value = '';
+            textInput.focus();
+            updateCharCount();
+            showStatus('Text cleared. Enter your study material.', 'info');
+        });
+
+        // Load sample texts
+        sampleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const sampleType = btn.getAttribute('data-sample');
+                textInput.value = sampleTexts[sampleType];
+                updateCharCount();
+                showStatus(`Loaded ${btn.textContent}. Ready to convert!`, 'success');
+            });
+        });
+
+        // Convert text to speech
+        convertBtn.addEventListener('click', async () => {
+            const text = textInput.value.trim();
+            
+            if (!text) {
+                showStatus('Please enter some text to convert.', 'error');
+                return;
+            }
+            
+            if (text.length > 5000) {
+                showStatus('Text is too long (max 5000 characters). Please shorten it.', 'error');
+                return;
+            }
+            
+            // Disable button and show progress
+            convertBtn.disabled = true;
+            convertBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            showProgress(30);
+            showStatus('Converting your text to speech...', 'processing');
+            
+            try {
+                // Send request to backend
+                const response = await fetch(BACKEND_URL + '/convert', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        text: text,
+                        language: voiceSelect.value,
+                        speed: parseFloat(speedSelect.value)
+                    })
+                });
+                
+                showProgress(70);
+                
+                if (!response.ok) {
+                    const error = await response.text();
+                    throw new Error(`Server error: ${response.status}`);
+                }
+                
+                // Get the audio file
+                const audioBlob = await response.blob();
+                showProgress(90);
+                
+                if (audioBlob.size === 0) {
+                    throw new Error('Empty audio file received');
+                }
+                
+                // Create download link
+                const audioUrl = URL.createObjectURL(audioBlob);
+                lastDownloadUrl = audioUrl;
+                
+                const downloadLink = document.createElement('a');
+                downloadLink.href = audioUrl;
+                const timestamp = new Date().toISOString().slice(0, 10);
+                downloadLink.download = `study_audio_${timestamp}.mp3`;
+                
+                // Trigger download
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                // Show download button
+                downloadBtn.style.display = 'flex';
+                downloadBtn.onclick = () => {
+                    downloadLink.click();
+                };
+                
+                // Clean up URL after download
+                setTimeout(() => {
+                    URL.revokeObjectURL(audioUrl);
+                }, 1000);
+                
+                showProgress(100);
+                showStatus('✅ Success! MP3 file downloaded. Check your downloads folder.', 'success');
+                
+                // Show file size
+                const fileSizeMB = (audioBlob.size / (1024 * 1024)).toFixed(2);
+                showStatus(`✅ Download complete! File size: ${fileSizeMB} MB. Ready for next conversion.`, 'success');
+                
+            } catch (error) {
+                console.error('Conversion error:', error);
+                
+                if (error.message.includes('Failed to fetch')) {
+                    showStatus('❌ Cannot connect to server. Make sure: 1) Backend is running 2) No firewall blocking', 'error');
+                } else {
+                    showStatus(`❌ Error: ${error.message}`, 'error');
+                }
+            } finally {
+                // Reset UI
+                convertBtn.disabled = false;
+                convertBtn.innerHTML = '<i class="fas fa-play-circle"></i> Convert to Speech';
+                hideProgress();
+            }
+        });
+
+        // Download again button
+        downloadBtn.addEventListener('click', () => {
+            showStatus('Downloading MP3 file again...', 'info');
+        });
+
+        // Check server status on load
+        async function checkServerStatus() {
+            try {
+                const response = await fetch(BACKEND_URL + '/');
+                if (response.ok) {
+                    serverStatus.innerHTML = '<span style="color: #28a745;">✅ Connected</span>';
+                } else {
+                    serverStatus.innerHTML = '<span style="color: #dc3545;">❌ Server Error</span>';
+                }
+            } catch (error) {
+                serverStatus.innerHTML = '<span style="color: #dc3545;">❌ Not Connected</span>';
+                showStatus('⚠️ Backend server not connected. Make sure python app.py is running.', 'error');
+            }
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            checkServerStatus();
+            showStatus('Ready! Paste your textbook content and click "Convert to Speech"', 'info');
+        });
+
+        // Update server status every 30 seconds
+        setInterval(checkServerStatus, 30000);
+    </script>
+</body>
+</html>
+
