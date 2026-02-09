@@ -9,7 +9,16 @@ CORS(app)  # Allow all origins
 
 @app.route('/')
 def home():
-    return jsonify({"status": "online", "message": "Text-to-Audiobook Backend is Running!"})
+    return jsonify({
+        "status": "online", 
+        "message": "Text-to-Audiobook Backend is Running!",
+        "version": "1.0.0",
+        "instructions": "Send POST request to /convert with JSON: {\"text\": \"your text here\"}"
+    })
+
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({"status": "healthy"}), 200
 
 @app.route('/convert', methods=['POST', 'OPTIONS'])
 def convert_text_to_speech():
@@ -28,6 +37,10 @@ def convert_text_to_speech():
         if not text:
             return jsonify({"error": "No text provided"}), 400
         
+        # Optional: get language and speed (for future use)
+        language = data.get('language', 'en')
+        speed = data.get('speed', 1.0)
+        
         # Limit text length
         if len(text) > 5000:
             text = text[:5000]
@@ -38,6 +51,7 @@ def convert_text_to_speech():
         filename = f"speech_{uuid.uuid4().hex}.mp3"
         
         # Convert text to speech
+        # Note: gTTS doesn't support speed parameter directly
         tts = gTTS(text=text, lang='en', slow=False)
         tts.save(filename)
         
@@ -48,7 +62,7 @@ def convert_text_to_speech():
             filename,
             mimetype='audio/mpeg',
             as_attachment=True,
-            download_name=f"student_speech.mp3"
+            download_name="student_speech.mp3"
         )
         
         # Clean up the file after sending
@@ -69,13 +83,14 @@ def convert_text_to_speech():
 
 if __name__ == '__main__':
     print("=" * 50)
-    print("TEXT-TO-AUDIOBOOK BACKEND FOR STUDENTS")
+    print("TEXT-TO-AUDIOBOOK BACKEND")
     print("=" * 50)
-    print("Server running at: http://localhost:5000")
-    print("Server running at: http://127.0.0.1:5000")
-    print("\nTo use:")
-    print("1. Keep this window OPEN")
-    print("2. Open index.html in your browser")
-    print("3. Type text and click 'Convert to Speech'")
+    print("Endpoints:")
+    print("- GET  /        : Server status")
+    print("- GET  /health  : Health check")
+    print("- POST /convert : Convert text to speech")
     print("=" * 50)
+    
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port, debug=False)
     app.run(host='0.0.0.0', port=5000, debug=True)
